@@ -42,13 +42,13 @@ def add_project_v2_draft_issue(project_id, title, body):
 
 def main():
     # Replace with the actual project ID retrieved from the first script.
-    project_id = "PVT_kwHOBXSci84AthMs"
+    project_id = "PVT_kwHOBXScns4AthZ9"
 
     # Example draft issues
     issues = [
-        {"title": "Draft Issue 1", "body": "This is the body of draft issue 1."},
-        {"title": "Draft Issue 2", "body": "This is the body of draft issue 2."},
-        {"title": "Draft Issue 3", "body": "This is the body of draft issue 3."}
+        {"title": "Draft Issue 145", "body": {'title':"This is the body of draft issue 1.", "Time Estimatm634": 1}},
+        {"title": "Draft Issue 25", "body": "This is the body of draft issue 2.", "Time Estimatm634": 3},
+        {"title": "Draft Issue 37", "body": "This is the body of draft issue 3.", "Time Estimatm634": 7}
     ]
 
     for issue in issues:
