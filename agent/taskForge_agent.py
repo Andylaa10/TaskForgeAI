@@ -1,4 +1,5 @@
 from autogen import ConversableAgent
+
 # from config import LLM_CONFIG
 
 LLM_CONFIG = {
@@ -17,10 +18,8 @@ LLM_CONFIG = {
 # Define the system prompt for TaskForgeAgent
 system_prompt = """
 You are TaskForge, an AI agent specialized in breaking down high-level tasks into actionable subtasks. 
-You will estimate the time and cost required for each subtask. Use any available tools to gather necessary 
-information for accurate estimations. Return your response in JSON format containing `subtasks`, `time_estimates`, 
-and `cost_estimates`.
-
+You will estimate the title and time required for each subtask (in hours). Use any available tools to gather necessary 
+information for accurate estimations. Return your response in JSON format containing `subtasks` & `time_estimates`.
 Example output:
 {
     "subtasks": [
@@ -28,36 +27,52 @@ Example output:
         {"name": "Subtask 2", "description": "Detailed description"}
     ],
     "time_estimates": {"Subtask 1": "2 hours", "Subtask 2": "3 hours"},
-    "cost_estimates": {"Subtask 1": "$50", "Subtask 2": "$75"}
 }
 
 Only return the JSON response.
+
+When all steps above are done:
+ - Write TERMINATE (it should always be UPPERCASE and the last word in the response at all time)
+ 
 """
 
-class TaskForgeAgent:
-    def __init__(self):
-        self.agent = self.create_agent()
 
-    def create_agent(self) -> ConversableAgent:
-        return ConversableAgent(
-            name="taskForge_agent",
-            llm_config=LLM_CONFIG,
-            system_message=system_prompt
-        )
+def create_task_forge_agent() -> ConversableAgent:
+    # Define the agent
+    agent = ConversableAgent(
+        name="Task Forge Agent",
+        llm_config=LLM_CONFIG,
+        system_message=system_prompt
+    )
 
-    def process_task(self, high_level_task: str) -> dict:  # Indented correctly now
-        """
-        Process a high-level task and return subtasks, time estimates, and cost estimates.
+    return agent
 
-        Args:
-            high_level_task (str): The high-level task to process.
 
-        Returns:
-            dict: JSON object containing subtasks, time, and cost estimates.
-        """
-        messages = [{"role": "user", "content": high_level_task}]  # Structured message
-        response = self.agent.generate_reply(messages=messages, sender="user")
-        return response
+def create_user_proxy():
+    user_proxy = ConversableAgent(
+        name="User Proxy",
+        llm_config=False,
+        is_termination_msg=lambda msg: msg.get("content") is not None and "TERMINATE" in msg["content"],
+        human_input_mode="NEVER",
+    )
+
+    return user_proxy
+
+
+def process_task(self, high_level_task: str) -> dict:  # Indented correctly now
+    """
+    Process a high-level task and return subtasks, time estimates, and cost estimates.
+
+    Args:
+        high_level_task (str): The high-level task to process.
+
+    Returns:
+        dict: JSON object containing subtasks, time, and cost estimates.
+    """
+    messages = [{"role": "user", "content": high_level_task}]  # Structured message
+    response = self.agent.generate_reply(messages=messages, sender="user")
+    return response
+
 
 # Utility function to read a high-level task from a file
 def read_task_from_file(file_path: str) -> str:
@@ -70,20 +85,21 @@ def read_task_from_file(file_path: str) -> str:
     Returns:
         str: The high-level task content.
     """
-    with open(file_path, "r") as file:
-        return file.read().strip()
+    with open(file_path, 'r') as file:
+        data = file.read()
+        return data
+
+
+def main():
+    file = read_task_from_file("task.txt")
+    task_forge_agent = create_task_forge_agent()
+    user_proxy = create_user_proxy()
+    user_proxy.initiate_chat(
+        task_forge_agent,
+        message=file
+    )
+
 
 # Example usage
 if __name__ == "__main__":
-    # Instantiate TaskForgeAgent
-    task_forge = TaskForgeAgent()
-
-    # Read task from a file
-    task_file = r"C:\Users\Kristian\Documents\GitHub\TaskForgeAI\agent\task.txt"
-    high_level_task = read_task_from_file(task_file)
-
-    # Process the task
-    breakdown = task_forge.process_task(high_level_task)
-
-    # Print the result
-    print(breakdown)
+    main()
