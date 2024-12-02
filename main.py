@@ -1,4 +1,5 @@
-﻿from agent.taskForge_agent import create_task_forge_agent, create_user_proxy
+﻿from agent.taskForge_agent import create_task_forge_agent
+from agent.user_proxy_agent import create_user_proxy
 from helpers.file_reader import read_task_from_file, retrieve_task
 
 
