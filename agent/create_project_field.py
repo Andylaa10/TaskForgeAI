@@ -23,7 +23,7 @@ def create_project_field(projectId):
     """
     variables = {
         'dataType': 'NUMBER',  # You can change the type if needed
-        'name': 'Time Estimatm634',  # Field name
+        'name': 'Time Estimate',  # Field name
         'projectId': projectId,  # Project ID
     }
     
@@ -50,7 +50,7 @@ def create_project_field(projectId):
 
 
 # Example usage:
-project_id = "PVT_kwHOBXScns4AthZ9"
+project_id = "PVT_kwHOBWsYlM4Athd3"
 result = create_project_field(project_id)
 if result:
     print(f"Field ID: {result}")
