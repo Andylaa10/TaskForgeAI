@@ -1,6 +1,13 @@
 import requests
+import os
 
-GITHUB_API_KEY = ""
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Access the API key
+GITHUB_API_KEY = os.getenv("GITHUB_API_KEY")
 GITHUB_GRAPHQL_API = "https://api.github.com/graphql"
 
 headers = {

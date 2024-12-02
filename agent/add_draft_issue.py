@@ -1,6 +1,13 @@
 import requests
+import os
 
-GITHUB_API_KEY = ""
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Access the API key
+GITHUB_API_KEY = os.getenv("GITHUB_API_KEY")
 GITHUB_GRAPHQL_API = "https://api.github.com/graphql"
 
 headers = {
@@ -78,8 +85,8 @@ def update_custom_field(project_id, project_item_id, field_id, value):
 
 def main():
     # Replace with your actual project and field IDs
-    project_id = "PVT_kwHOBWsYlM4Athd3"  # The project ID
-    time_estimate_field_id = "PVTF_lAHOBWsYlM4Athd3zgkRNT8"  # The ID of your Time Estimate field
+    project_id = "PVT_kwHOBXSci84Athha"  # The project ID
+    time_estimate_field_id = "PVTF_lAHOBXSci84AthhazgkRQGw"  # The ID of your Time Estimate field
 
     # Example draft issues
     issues = [

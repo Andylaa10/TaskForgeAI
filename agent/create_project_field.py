@@ -1,6 +1,13 @@
 import requests
+import os
 
-GITHUB_API_KEY = ""
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Access the API key
+GITHUB_API_KEY = os.getenv("GITHUB_API_KEY")
 GITHUB_GRAPHQL_API = "https://api.github.com/graphql"
 
 headers = {
@@ -50,7 +57,7 @@ def create_project_field(projectId):
 
 
 # Example usage:
-project_id = "PVT_kwHOBWsYlM4Athd3"
+project_id = "PVT_kwHOBXSci84Athha"
 result = create_project_field(project_id)
 if result:
     print(f"Field ID: {result}")

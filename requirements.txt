@@ -3,3 +3,4 @@ ollama==0.3.3
 fix-busted-json==0.0.18
 flaml[automl]
 requests~=2.32.3
+python-dotenv~=1.0.1
