@@ -1,5 +1,15 @@
 from autogen import ConversableAgent
-from config import LLM_CONFIG
+# from config import LLM_CONFIG
+
+LLM_CONFIG = {
+    "model": "mistral:latest",
+    "client_host": "127.0.0.1:11434",
+    "api_type": "ollama",
+    "repeat_penalty": 1.1,
+    "seed": 42,
+    "stream": False,
+    "native_tool_calls": False
+}
 
 # Define the system prompt for TaskForgeAgent
 system_prompt = """
@@ -32,7 +42,7 @@ class TaskForgeAgent:
             system_message=system_prompt
         )
 
-    def process_task(self, high_level_task: str) -> dict:
+    def process_task(self, high_level_task: str) -> dict:  # Indented correctly now
         """
         Process a high-level task and return subtasks, time estimates, and cost estimates.
 
@@ -42,9 +52,8 @@ class TaskForgeAgent:
         Returns:
             dict: JSON object containing subtasks, time, and cost estimates.
         """
-        response = self.agent.generate_response(
-            user_message={"content": high_level_task}
-        )
+        messages = [{"role": "user", "content": high_level_task}]  # Structured message
+        response = self.agent.generate_reply(messages=messages, sender="user")
         return response
 
 # Utility function to read a high-level task from a file
@@ -67,7 +76,7 @@ if __name__ == "__main__":
     task_forge = TaskForgeAgent()
 
     # Read task from a file
-    task_file = "C:\Users\Kristian\Documents\GitHub\TaskForgeAI\agent\task.txt"
+    task_file = r"C:\Users\Kristian\Documents\GitHub\TaskForgeAI\agent\task.txt"
     high_level_task = read_task_from_file(task_file)
 
     # Process the task

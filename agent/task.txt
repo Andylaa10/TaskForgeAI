@@ -1,1 +1,1 @@
-The task is to create a simple app that users can login to and add friends.
+Develop a web application that allows users to register, log in, and manage their profiles.
