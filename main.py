@@ -29,24 +29,17 @@ def main():
 
     # Start the conversation with the TaskForge agent
     try:
-        print("[DEBUG] Initiating chat with TaskForge agent...")
         chat_res = user_proxy.initiate_chat(
             task_forge_agent,
             message="Read the content of the file at task.txt using the available tool (read_content_of_file)."
         )
 
-        # Log the full response for debugging
-        print("[DEBUG] Agent Response:")
-        print(chat_res)
-
         # Extract and process the content
         content = chat_res.chat_history[1]["content"]
-        print("[DEBUG] Retrieved Content from Agent:", content)
 
         # Process tasks
         tasks = retrieve_task(content)
         if not tasks:
-            print("[ERROR] No tasks retrieved from agent's response.")
             return
 
         for task in tasks:

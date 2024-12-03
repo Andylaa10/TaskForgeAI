@@ -27,23 +27,22 @@ def retrieve_task(content) -> Annotated[List[Task], "Returns a list of the gener
     :return:
     """
     tasks: List[Task] = []
-
     # Remove terminate from our json object
     if "TERMINATE" in content:
         content = content.split("TERMINATE")[0].strip()
-
     data = json.loads(content)
-
     subtasks = data["subtasks"]
-
+    time_estimates = data["time_estimates"]
     for task in subtasks:
         title = task['title']
         description = task['description']
-        time_estimate = task['time_estimate']
-
-        if time_estimate is not None:
-            tasks.append(Task(title, description, time_estimate))
+        time = None
+        for estimate in time_estimates:
+            if title in estimate:
+                time = estimate[title]
+                break
+        if time is not None:
+            tasks.append(Task(title, description, time))
         else:
             print(f"No time estimate found for task: {title}")
-
     return tasks
