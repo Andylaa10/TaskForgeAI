@@ -6,6 +6,9 @@ from helpers.file_reader import read_task_from_file, retrieve_task
 
 
 def setup_agents():
+    """
+    Initialize and set up TaskForgeAgent and UserProxy with the registered file-reading tool.
+    """
     task_forge_agent = create_task_forge_agent()
     user_proxy = create_user_proxy()
 
@@ -16,24 +19,44 @@ def setup_agents():
         name="read_content_of_file",  # Match this name to the system prompt
         description="Read content from a file",
     )
-    
+
     return task_forge_agent, user_proxy
-    
+
 
 def main():
+    # Set up agents
     task_forge_agent, user_proxy = setup_agents()
 
-    chat_res = user_proxy.initiate_chat(
-        task_forge_agent,
-        message = "Read the content of the file at task.txt using the available tool."
-    )
+    # Start the conversation with the TaskForge agent
+    try:
+        print("[DEBUG] Initiating chat with TaskForge agent...")
+        chat_res = user_proxy.initiate_chat(
+            task_forge_agent,
+            message="Read the content of the file at task.txt using the available tool (read_content_of_file)."
+        )
 
-    content = chat_res.chat_history[1]["content"]
+        # Log the full response for debugging
+        print("[DEBUG] Agent Response:")
+        print(chat_res)
 
-    for task in retrieve_task(content):
-        print(task.title)
-        print(task.description)
-        print(task.time_estimate)
+        # Extract and process the content
+        content = chat_res.chat_history[1]["content"]
+        print("[DEBUG] Retrieved Content from Agent:", content)
+
+        # Process tasks
+        tasks = retrieve_task(content)
+        if not tasks:
+            print("[ERROR] No tasks retrieved from agent's response.")
+            return
+
+        for task in tasks:
+            print(f"Task Title: {task.title}")
+            print(f"Task Description: {task.description}")
+            print(f"Task Time Estimate: {task.time_estimate} hours")
+
+    except Exception as e:
+        print(f"[ERROR] An exception occurred: {e}")
+
 
 if __name__ == '__main__':
     main()
