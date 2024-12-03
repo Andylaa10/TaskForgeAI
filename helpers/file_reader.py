@@ -17,6 +17,7 @@ def read_task_from_file(file_path: str) -> str:
     """
     with open(file_path, 'r') as file:
         data = file.read()
+        print(f"File Content: {data}")  # Debug output
         return data
 
 def retrieve_task(content) -> Annotated[List[Task], "Returns a list of the generate tasks with title, description and time_estimates"]:
@@ -34,20 +35,14 @@ def retrieve_task(content) -> Annotated[List[Task], "Returns a list of the gener
     data = json.loads(content)
 
     subtasks = data["subtasks"]
-    time_estimates = data["time_estimates"]
 
     for task in subtasks:
         title = task['title']
         description = task['description']
-        time = None
+        time_estimate = task['time_estimate']
 
-        for estimate in time_estimates:
-            if title in estimate:
-                time = estimate[title]
-                break
-
-        if time is not None:
-            tasks.append(Task(title, description, time))
+        if time_estimate is not None:
+            tasks.append(Task(title, description, time_estimate))
         else:
             print(f"No time estimate found for task: {title}")
 

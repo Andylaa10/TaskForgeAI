@@ -7,7 +7,8 @@
             "repeat_penalty": 1.1,
             "seed": 42,
             "stream": False,
-            "native_tool_calls": False
+            "native_tool_calls": False,
+            "cache_seed": None,
         }
-    ]
+    ],
 }
