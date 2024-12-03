@@ -41,7 +41,6 @@ Rules:
 - Avoid redundant tool calls or unnecessary file reads.
 - Make sure that all tasks are split up into as many tasks as possible.
 
-
 When all steps above are done:
 - Write TERMINATE (it should always be UPPERCASE and the last word in the response at all time).
 

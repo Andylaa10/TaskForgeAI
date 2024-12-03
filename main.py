@@ -35,17 +35,17 @@ def main():
         )
 
         # Extract and process the content
-        content = chat_res.chat_history[1]["content"]
+       # content = chat_res.chat_history[1]["content"]
 
         # Process tasks
-        tasks = retrieve_task(content)
-        if not tasks:
-            return
+       # tasks = retrieve_task(content)
+        #if not tasks:
+        #    return
 
-        for task in tasks:
-            print(f"Task Title: {task.title}")
-            print(f"Task Description: {task.description}")
-            print(f"Task Time Estimate: {task.time_estimate} hours")
+      #  for task in tasks:
+      #      print(f"Task Title: {task.title}")
+       #     print(f"Task Description: {task.description}")
+      #      print(f"Task Time Estimate: {task.time_estimate} hours")
 
     except Exception as e:
         print(f"[ERROR] An exception occurred: {e}")

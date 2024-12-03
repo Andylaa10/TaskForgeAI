@@ -1,1 +1,4 @@
-Develop a web application that allows users to register, log in, and manage their profiles.
+Develop a mobile application with the following features:
+- User registration and authentication
+- Calculator functionality
+- Log in and log out capabilities
