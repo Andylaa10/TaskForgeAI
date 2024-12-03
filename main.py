@@ -35,10 +35,6 @@ def main():
             message="Read the content of the file at task.txt using the available tool (read_content_of_file)."
         )
 
-        # Log the full response for debugging
-        print("[DEBUG] Agent Response:")
-        print(chat_res)
-
         # Extract and process the content
         content = chat_res.chat_history[1]["content"]
         print("[DEBUG] Retrieved Content from Agent:", content)
