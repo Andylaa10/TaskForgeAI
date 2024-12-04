@@ -20,29 +20,3 @@ def read_task_from_file(file_path: str) -> str:
         print(f"File Content: {data}")  # Debug output
         return data
 
-def retrieve_task(content) -> Annotated[List[Task], "Returns a list of the generate tasks with title, description and time_estimates"]:
-    """
-    Iterates through the string to get the title, description and time_estimate
-    :param content:
-    :return:
-    """
-    tasks: List[Task] = []
-    # Remove terminate from our json object
-    if "TERMINATE" in content:
-        content = content.split("TERMINATE")[0].strip()
-    data = json.loads(content)
-    subtasks = data["subtasks"]
-    time_estimates = data["time_estimates"]
-    for task in subtasks:
-        title = task['title']
-        description = task['description']
-        time = None
-        for estimate in time_estimates:
-            if title in estimate:
-                time = estimate[title]
-                break
-        if time is not None:
-            tasks.append(Task(title, description, time))
-        else:
-            print(f"No time estimate found for task: {title}")
-    return tasks

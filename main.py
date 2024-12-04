@@ -2,12 +2,16 @@
 
 from agent.taskForge_agent import create_task_forge_agent
 from agent.user_proxy_agent import create_user_proxy
-from helpers.file_reader import read_task_from_file, retrieve_task
+from helpers.file_reader import read_task_from_file
 from helpers.github_client import GithubClient
 from tools.create_project_tool import CreateProjectTool
 from tools.update_custom_draft_field_tool import update_custom_field
 from tools.get_owner_id_tool import get_owner_id
-import os
+from tools.create_project_field import create_project_field
+from tools.add_draft_issue_tool import add_project_v2_draft_issue
+
+import json
+
 
 
 def setup_agents():
@@ -38,7 +42,7 @@ def main():
 
     try:
         # Start the conversation with the TaskForge agent
-        chat_res = user_proxy.initiate_chat(
+        user_proxy.initiate_chat(
             task_forge_agent,
             message="Read the content of the file at task.txt using the available tool (read_content_of_file)."
         )
@@ -52,8 +56,29 @@ def main():
         project_id = create_project_tool.create_project(owner_id, project_name)
         print(f"Project created successfully with ID: {project_id}")
 
-        # update_custom_field(project_id, )
+        # Create the project field and get the project field ID
+        project_field_id = create_project_field(project_id, github_client)
+        print(f"Project Field created successfully with ID: {project_field_id}")
 
+        # Retrieve the last message from task_forge_agent
+        response_content = task_forge_agent.last_message(user_proxy)
+
+        print("Response Content:", response_content)
+
+        if 'content' in response_content:
+            content_data = json.loads(response_content["content"])
+        if "subtasks" in content_data:
+            subtasks_data = content_data["subtasks"]
+        for subtask in subtasks_data:
+            title = subtask["title"]
+            body = subtask['description']
+            time_estimate = subtask['time_estimate']
+            print("title: ", title, "description: ", body, "time_estimate: ", time_estimate)
+            draft_issue_id = add_project_v2_draft_issue(project_id, title, body, github_client)
+            print('draft issue:',draft_issue_id)
+            updated_field_id = update_custom_field(project_id, draft_issue_id, project_field_id, time_estimate, github_client)
+            print('updated field ID:', updated_field_id)
+            
 
     except Exception as e:
         print(f"[ERROR] An exception occurred: {e}")
