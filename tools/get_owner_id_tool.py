@@ -26,5 +26,6 @@ def get_owner_id() -> Annotated[str, "Id of the owner"]:
     )
 
     if response.status_code == 200:
+        print('owner id')
         viewer_data = response.json()
         return str(viewer_data["data"]["viewer"]["id"])
