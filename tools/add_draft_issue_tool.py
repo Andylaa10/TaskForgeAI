@@ -1,8 +1,7 @@
 ﻿from typing import Annotated
+from helpers.github_client import GithubClient
 
 import requests
-
-from helpers.github_client import GithubClient
 
 def add_project_v2_draft_issue(project_id: Annotated[str, "Id of the GitHub project"],
                                title: Annotated[str, "Name of the new draft"],
@@ -40,7 +39,6 @@ def add_project_v2_draft_issue(project_id: Annotated[str, "Id of the GitHub proj
 
     if response.status_code == 200:
         draft_issue_data = response.json()
-        print("Draft issue added:", draft_issue_data)
         return draft_issue_data["data"]["addProjectV2DraftIssue"]["projectItem"]["id"]
     else:
         print("Failed to add draft issue. Response:", response.json())

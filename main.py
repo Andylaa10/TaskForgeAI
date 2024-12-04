@@ -1,5 +1,4 @@
 ﻿from autogen import register_function
-
 from agent.taskForge_agent import create_task_forge_agent
 from agent.user_proxy_agent import create_user_proxy
 from helpers.file_reader import read_task_from_file
@@ -50,32 +49,31 @@ def main():
         # Retrieve the last message from task_forge_agent
         response_content = task_forge_agent.last_message(user_proxy)
 
-        print("Response Content:", response_content)
-
         if 'content' in response_content:
             content_data = json.loads(response_content["content"])
-            print("content_data:", content_data)
+        
         if 'project_name' in content_data:
+            # Get the project name from the agent response
             project_name = content_data["project_name"]
+            
             # Create the project and get the project ID
             project_id = create_project_tool.create_project(owner_id, project_name)
-            print(f"Project created successfully with ID: {project_id}")
+            
             # Create the project field and get the project field ID
             project_field_data = create_project_field(project_id, github_client)
             project_field_id = project_field_data['id']
-            print(f"Project Field created successfully with ID: {project_field_id}")
+        
         if "subtasks" in content_data:
             subtasks_data = content_data["subtasks"]
+        
         for subtask in subtasks_data:
             title = subtask["title"]
             body = subtask['description']
             time_estimate = subtask['time_estimate']
-            print("{", "title: ", title, "description: ", body, "time_estimate: ", time_estimate, "}")
+            
             draft_issue_id = add_project_v2_draft_issue(project_id, title, body, github_client)
-            print('draft issue:',draft_issue_id)
+            
             updated_field_id = update_custom_field(project_id, draft_issue_id, project_field_id, time_estimate, github_client)
-            print('updated field ID:', updated_field_id)
-
 
     except Exception as e:
         print(f"[ERROR] An exception occurred: {e}")

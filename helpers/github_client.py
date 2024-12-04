@@ -13,4 +13,3 @@ class GithubClient:
         "Authorization": f"Bearer {github_api_key}",
         "Content-Type": "application/json"
     }
-    

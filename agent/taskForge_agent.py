@@ -1,5 +1,4 @@
-from autogen import ConversableAgent, AssistantAgent
-
+from autogen import AssistantAgent
 from config.config import LLM_CONFIG
 
 # Define the system prompt for TaskForgeAgent
@@ -47,9 +46,7 @@ When all steps above are done:
 
 """
 
-
 def create_task_forge_agent() -> AssistantAgent:
-    # Define the agent
     agent = AssistantAgent(
         name="Task Forge Agent",
         llm_config=LLM_CONFIG,
@@ -57,5 +54,3 @@ def create_task_forge_agent() -> AssistantAgent:
     )
 
     return agent
-
-

@@ -2,7 +2,6 @@
 
 from helpers.github_client import GithubClient
 
-
 def get_owner_id(github_client: GithubClient):
     """
     Get the owner of the GitHub project

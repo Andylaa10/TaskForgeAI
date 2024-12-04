@@ -1,10 +1,4 @@
 ﻿# Utility function to read a high-level task from a file
-import json
-from typing import List, Annotated
-
-from models.task import Task
-
-
 def read_task_from_file(file_path: str) -> str:
     """
     Read the high-level task from a file.
@@ -19,4 +13,3 @@ def read_task_from_file(file_path: str) -> str:
         data = file.read()
         print(f"File Content: {data}")  # Debug output
         return data
-

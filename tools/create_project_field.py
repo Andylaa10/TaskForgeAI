@@ -2,7 +2,6 @@ import requests
 
 from helpers.github_client import GithubClient
 
-
 def create_project_field(projectId, github_client: GithubClient):
     query_create_project_field = """
     mutation($dataType: ProjectV2CustomFieldType!, $name: String!, $projectId: ID!, $singleSelectOptions: [ProjectV2SingleSelectFieldOptionInput!]) {

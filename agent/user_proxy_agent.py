@@ -2,9 +2,6 @@
 from autogen.coding import LocalCommandLineCodeExecutor
 import tempfile
 
-
-
-
 def create_user_proxy():
     temp_dir = tempfile.TemporaryDirectory()
 
@@ -19,6 +16,5 @@ def create_user_proxy():
         max_consecutive_auto_reply=1,
         code_execution_config={"executor": code_executor_config},
     )
-
 
     return user_proxy

@@ -37,10 +37,6 @@ class CreateProjectTool:
             json={"query": query, "variables": variables}
         )
 
-        print(f"Response Status Code: {response.status_code}")
-        print(f"Response Text: {response.text}")
-        print(f"Response JSON: {response.json()}")
-
         if response.status_code == 200:
             project_data = response.json()
             return project_data["data"]["createProjectV2"]["projectV2"]["id"]
