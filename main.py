@@ -34,6 +34,7 @@ def setup_agents():
 
 def main():
     # Set up agents
+    global subtasks_data, content_data
     task_forge_agent, user_proxy = setup_agents()
 
     # Initialize GitHub client and CreateProjectTool
@@ -57,7 +58,8 @@ def main():
         print(f"Project created successfully with ID: {project_id}")
 
         # Create the project field and get the project field ID
-        project_field_id = create_project_field(project_id, github_client)
+        project_field_data = create_project_field(project_id, github_client)
+        project_field_id = project_field_data['id']
         print(f"Project Field created successfully with ID: {project_field_id}")
 
         # Retrieve the last message from task_forge_agent
