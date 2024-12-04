@@ -25,6 +25,15 @@ def setup_agents():
         name="read_content_of_file",  # Match this name to the system prompt
         description="Read content from a file",
     )
+    
+    register_function(
+        get_owner_id,
+        caller=task_forge_agent,
+        executor=user_proxy,
+        name="get_owner_id",  # Match this name to the system prompt
+        description="Get owner of the github account",
+    )
+    
 
     return task_forge_agent, user_proxy
 
@@ -38,37 +47,39 @@ def create_project_and_subtasks(github_client, task_forge_agent, user_proxy):
             task_forge_agent,
             message="Read the content of the file at task.txt using the available tool (read_content_of_file)."
         )
-
-        owner_id = get_owner_id(github_client)
-
-        # Retrieve the last message from task_forge_agent
-        response_content = task_forge_agent.last_message(user_proxy)
-
-        if 'content' in response_content:
-            content_data = json.loads(response_content["content"])
         
-        if 'project_name' in content_data:
-            # Get the project name from the agent response
-            project_name = content_data["project_name"]
-            
-            # Create the project and get the project ID
-            project_id = create_project(owner_id, project_name)
-            
-            # Create the project field and get the project field ID
-            project_field_data = create_project_field(project_id, github_client)
-            project_field_id = project_field_data['id']
         
-        if "subtasks" in content_data:
-            subtasks_data = content_data["subtasks"]
+
+        # owner_id = get_owner_id(github_client)
+
+        # # Retrieve the last message from task_forge_agent
+        # response_content = task_forge_agent.last_message(user_proxy)
+
+        # if 'content' in response_content:
+        #     content_data = json.loads(response_content["content"])
         
-        for subtask in subtasks_data:
-            title = subtask["title"]
-            body = subtask['description']
-            time_estimate = subtask['time_estimate']
+        # if 'project_name' in content_data:
+        #     # Get the project name from the agent response
+        #     project_name = content_data["project_name"]
             
-            draft_issue_id = add_project_v2_draft_issue(project_id, title, body, github_client)
+        #     # Create the project and get the project ID
+        #     project_id = create_project(owner_id, project_name)
             
-            update_custom_field(project_id, draft_issue_id, project_field_id, time_estimate, github_client)
+        #     # Create the project field and get the project field ID
+        #     project_field_data = create_project_field(project_id, github_client)
+        #     project_field_id = project_field_data['id']
+        
+        # if "subtasks" in content_data:
+        #     subtasks_data = content_data["subtasks"]
+        
+        # for subtask in subtasks_data:
+        #     title = subtask["title"]
+        #     body = subtask['description']
+        #     time_estimate = subtask['time_estimate']
+            
+        #     draft_issue_id = add_project_v2_draft_issue(project_id, title, body, github_client)
+            
+        #     update_custom_field(project_id, draft_issue_id, project_field_id, time_estimate, github_client)
 
     except Exception as e:
         print(f"[ERROR] An exception occurred: {e}")
