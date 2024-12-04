@@ -5,6 +5,8 @@ from agent.user_proxy_agent import create_user_proxy
 from helpers.file_reader import read_task_from_file, retrieve_task
 from helpers.github_client import GithubClient
 from tools.create_project_tool import CreateProjectTool
+from tools.update_custom_draft_field_tool import update_custom_field
+from tools.get_owner_id_tool import get_owner_id
 import os
 
 
@@ -41,24 +43,17 @@ def main():
             message="Read the content of the file at task.txt using the available tool (read_content_of_file)."
         )
 
+        owner_id = get_owner_id(github_client)
+
         # Create a GitHub project for the subtasks
         project_name = "Test Project nr. 123123"
-        project_id = create_project_tool.create_project(github_client.owner_id, project_name)
+
+        # Create the project and get the project ID
+        project_id = create_project_tool.create_project(owner_id, project_name)
         print(f"Project created successfully with ID: {project_id}")
 
+        # update_custom_field(project_id, )
 
-        # Extract and process the content
-       # content = chat_res.chat_history[1]["content"]
-
-        # Process tasks
-       # tasks = retrieve_task(content)
-        #if not tasks:
-        #    return
-
-      #  for task in tasks:
-      #      print(f"Task Title: {task.title}")
-      #      print(f"Task Description: {task.description}")
-      #      print(f"Task Time Estimate: {task.time_estimate} hours")
 
     except Exception as e:
         print(f"[ERROR] An exception occurred: {e}")
