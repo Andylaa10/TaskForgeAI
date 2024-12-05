@@ -1,8 +1,4 @@
-﻿import os
-from dotenv import load_dotenv
-
-
-# LLM_CONFIG = {
+﻿# LLM_CONFIG = {
 #     "config_list": [
 #         {
 #             "model": "mistral:latest",
@@ -17,16 +13,19 @@ from dotenv import load_dotenv
 #     ],
 # }
 
-# load_dotenv(dotenv_path=".env")
+import os
+from dotenv import load_dotenv
 
-# api_key = os.getenv("OPENAI_API_KEY")
+load_dotenv(dotenv_path=".env")
+
+mistral_api_key = os.getenv("OPENAI_API_KEY")
 
 
 LLM_CONFIG = {
     "config_list": [
         {
             "model": "open-mistral-nemo", # model name from the Mistral AI API docs
-            "api_key": "api_key",
+            "api_key": mistral_api_key,
             "api_type": "mistral", # the API type is always mistral
             "api_rate_limit": 0.25, # the rate limit is 0.25 api requests per second
             "num_predict": -1, # no limit on the number of tokens to predict
