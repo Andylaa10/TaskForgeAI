@@ -4,3 +4,5 @@ fix-busted-json==0.0.18
 flaml[automl]
 requests~=2.32.3
 python-dotenv~=1.0.1
+mistralai==1.2.3
+autogen-agentchat @ git+https://github.com/patrickstolc/autogen.git@0.2#egg=autogen-agentchat
