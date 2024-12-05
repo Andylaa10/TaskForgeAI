@@ -23,26 +23,41 @@ def setup_agents():
         caller=task_forge_agent,
         executor=user_proxy,
         name="read_task_from_file",  # Match this name to the system prompt
-        description="Read content from a file",
+        description="Reads the content of the selected file.",
     )
     
     register_function(
         get_owner_id,
         caller=task_forge_agent,
         executor=user_proxy,
-        name="get_owner_id",  # Match this name to the system prompt
-        description="Get owner of the github account and returns the id. The owner id needs to saved and used as an argument by create_project tool",
+        name="get_owner_id",
+        description="Get owner of the github account and returns the id. The owner id needs to saved and used as an argument by create_project tool.",
     )
     
     register_function(
         create_project,
         caller=task_forge_agent,
         executor=user_proxy,
-        name="create_project",  # Match this name to the system prompt
-        description="Create Github project by taking the id of the owner and the generated project_name as arguments",
+        name="create_project",
+        description="Create Github project by taking the id of the owner and the generated project_name as arguments.",
+    )
+
+    register_function(
+        create_project_field,
+        caller=task_forge_agent,
+        executor=user_proxy,
+        name="create_project_field",
+        description="Create a custom field inside the Github Project by using the generated Project ID.",
+    )
+
+    register_function(
+        add_project_v2_draft_issue,
+        caller=task_forge_agent,
+        executor=user_proxy,
+        name="add_project_v2_draft_issue",
+        description="Add the subtasks to the Github Project using the generated Project ID, Project Title and JSON-object.",
     )
     
-
     return task_forge_agent, user_proxy
 
 def create_project_and_subtasks(github_client, task_forge_agent, user_proxy):
@@ -53,7 +68,7 @@ def create_project_and_subtasks(github_client, task_forge_agent, user_proxy):
         #Start the conversation with the TaskForge agent
         user_proxy.initiate_chat(
             task_forge_agent,
-            message="Read the content of the file at task.txt using the available tool (read_task_from_file, get_owner_id, create_project).",
+            message="Read the content of the file at task.txt using the available tool (read_task_from_file, get_owner_id, create_project, create_project_field, add_project_v2_draft_issue).",
         )
 
         # owner_id = get_owner_id(github_client)

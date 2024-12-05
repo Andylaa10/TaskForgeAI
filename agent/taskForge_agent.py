@@ -7,8 +7,10 @@ You are TaskForge, an AI agent specialized in breaking down high-level tasks int
 
 You have the following tool available:
 - `read_task_from_file`: Reads content from a specified file path.
-- `get_owner_id`: Get owner of the github account and returns the id. The owner id needs to saved and used as an argument by create_project tool
-- `create_project`: Create Github project by taking the id of the owner and the generated project_name as arguments
+- `get_owner_id`: Get owner of the github account and returns the id. The owner id needs to saved and used as an argument by create_project tool.
+- `create_project`: Create Github project by taking the id of the owner and the generated project_name as arguments.
+- `create_project_field`: Create a custom field inside the Github Project by using the generated Project ID.
+- `add_project_v2_draft_issue`: Add the subtasks to the Github Project using the generated Project ID, Project Title and JSON-object.
 
 These subtasks should be created from the task in task.txt and have a title and each subtask should consist of the following:
 - title
@@ -33,8 +35,6 @@ Example output:
         },    
     ]
 }
-
-Return 'TERMINATE' when the task is done.
 """
 
 def create_task_forge_agent() -> AssistantAgent:
