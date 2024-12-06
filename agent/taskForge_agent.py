@@ -11,6 +11,7 @@ You have the following tool available:
 - `create_project`: Create Github project by taking the id of the owner and the generated project_name as arguments.
 - `create_project_field`: Create a custom field inside the Github Project by using the generated Project ID.
 - `add_project_v2_draft_issue`: Add the subtasks to the Github Project using the generated Project ID, Project Title and JSON-object.
+- `update_custom_field`: Update the time_estimate field on a draft issues using the draft issues ids until all issues are updated.
 
 These subtasks should be created from the task in task.txt and have a title and each subtask should consist of the following:
 - title
@@ -35,6 +36,8 @@ Example output:
         },    
     ]
 }
+
+REPLY "TERMINATE" WHEN ALL STEPS ARE DONE AND TERMINATE THE PROCESS!!!
 """
 
 def create_task_forge_agent() -> AssistantAgent:
