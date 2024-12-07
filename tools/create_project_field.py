@@ -1,8 +1,11 @@
+from typing import Annotated
 import requests
 
 from helpers.github_client import GithubClient
 
-def create_project_field(projectId, github_client: GithubClient):
+def create_project_field(projectId: Annotated[str, "ID of the GitHub Project"]) -> Annotated[str, "Id of the newly created Github Prject Field"]:
+    github_client = GithubClient()
+
     query_create_project_field = """
     mutation($dataType: ProjectV2CustomFieldType!, $name: String!, $projectId: ID!, $singleSelectOptions: [ProjectV2SingleSelectFieldOptionInput!]) {
         createProjectV2Field(input: {dataType: $dataType, name: $name, projectId: $projectId, singleSelectOptions: $singleSelectOptions}) {

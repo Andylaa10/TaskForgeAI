@@ -1,13 +1,16 @@
-﻿import requests
+﻿from typing import Annotated
+import requests
 
 from helpers.github_client import GithubClient
 
-def get_owner_id(github_client: GithubClient):
+def get_owner_id() -> Annotated[str, "Id of the owner"]:
     """
     Get the owner of the GitHub project
     :param github_client:
     :return:
     """
+    
+    github_client = GithubClient()
     query_get_id = """    
     query {    
         viewer {    
@@ -23,8 +26,6 @@ def get_owner_id(github_client: GithubClient):
     )
 
     if response.status_code == 200:
+        print('owner id')
         viewer_data = response.json()
-        return viewer_data["data"]["viewer"]["id"]
-    else:
-        print("Failed to fetch owner ID. Response:", response.json())
-        exit()
+        return str(viewer_data["data"]["viewer"]["id"])

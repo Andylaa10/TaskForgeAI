@@ -6,8 +6,7 @@ import requests
 def update_custom_field(project_id: Annotated[str, "Id of the GitHub project"],
                         project_item_id: Annotated[str, "Id of the draft"],
                         field_id: Annotated[str, "Id of the custom field"],
-                        value: Annotated[int, "Numbers only"],
-                        github_client: GithubClient):
+                        value: Annotated[int, "Numbers only"]) -> Annotated[str, "Return the id of the updated draft issue field"]:
     """
     Updates a draft with a custom field which in this is time_estimate
     :param project_id:
@@ -17,6 +16,8 @@ def update_custom_field(project_id: Annotated[str, "Id of the GitHub project"],
     :param github_client:
     :return:
     """
+    
+    github_client = GithubClient()
 
     query_update_field = """
     mutation($projectId: ID!, $projectItemId: ID!, $fieldId: ID!, $value: ProjectV2FieldValue!) {
@@ -39,8 +40,12 @@ def update_custom_field(project_id: Annotated[str, "Id of the GitHub project"],
         "value": formatted_value
     }
 
-    requests.post(
+    response = requests.post(
         url=github_client.github_graphql_api_url,
         headers=github_client.headers,
         json={"query": query_update_field, "variables": variables}
     )
+    
+    if response.status_code == 200: 
+        return response.json()
+    return ""
