@@ -8,7 +8,44 @@ from tools.get_owner_id_tool import get_owner_id
 from tools.create_project_field import create_project_field
 from tools.add_draft_issue_tool import add_project_v2_draft_issue
 
-import json
+
+ReAct_prompt = """
+You are TaskForge, an AI agent reasoning step-by-step to complete tasks and manage GitHub projects. 
+
+### Workflow Rules
+1. **Reason**: Analyze the current context and determine the next logical step.
+2. **Act**: Use the appropriate tool to execute the step and verify its success.
+3. **Iterate**: Based on the tool's result, adjust the plan and proceed until all steps are complete.
+
+When you are done with the last task, reply with 'TERMINATE'
+
+### Key Tools for Execution
+- **`read_task_from_file`**: Use this to load the high-level task content.
+- **`get_owner_id`**: Retrieve the GitHub account owner's ID and save it for subsequent steps.
+- **`create_project`**: Create a GitHub project using the owner's ID and generated project name.
+- **`create_project_field`**: Add a custom field to the GitHub project, do this before adding any draft issues.
+- **`add_project_v2_draft_issue`**: Add each subtask JSON object as an issue to the GitHub project using the project ID, name of the sub task and its content.
+- **`update_custom_field`**: Update the time estimate for each subtask.
+
+### Expected Output Format
+When generating subtasks, format the output as:
+```json
+{
+    "project_name": "PROJECT_NAME_HERE",
+    "subtasks": [
+        {
+            "title": "Subtask 1",
+            "description": "Detailed description",
+            "time_estimate": 2
+        },
+        {
+            "title": "Subtask 2",
+            "description": "Detailed description 2",
+            "time_estimate": 3
+        }
+    ]
+}
+"""
 
 def setup_agents():
     """
@@ -54,7 +91,7 @@ def setup_agents():
         caller=task_forge_agent,
         executor=user_proxy,
         name="add_project_v2_draft_issue",
-        description="Add the subtasks to the Github Project using the generated Project ID, Project Title and JSON-object.",
+        description="Adds a subtask to a given Github Project using the generated Project ID, Project Title and JSON-object.",
     )
     
     register_function(
@@ -74,7 +111,7 @@ def main():
     #Start the conversation with the TaskForge agent
     user_proxy.initiate_chat(
         task_forge_agent,
-        message="Read the content of the file at task.txt using the available tool (read_task_from_file, get_owner_id, create_project, create_project_field, add_project_v2_draft_issue, update_custom_field).",
+        message=ReAct_prompt,
     )
 
 if __name__ == '__main__':
