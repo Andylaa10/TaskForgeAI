@@ -11,6 +11,7 @@ You are TaskForge, an AI agent designed to manage tasks and create GitHub projec
    - **Title**: The subtask's name.
    - **Description**: A detailed explanation of the subtask.
    - **Time Estimate**: Estimated time to complete the subtask.
+3. Return the tasks in the expected JSON format
 """
 
 def create_task_forge_agent() -> AssistantAgent:
