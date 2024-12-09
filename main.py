@@ -5,7 +5,7 @@ from tools.file_reader_tool import read_task_from_file
 from tools.create_project_tool import create_project
 from tools.update_custom_draft_field_tool import update_custom_field
 from tools.get_owner_id_tool import get_owner_id
-from tools.create_project_field import create_project_field
+from tools.create_project_field_tool import create_project_field
 from tools.add_draft_issue_tool import add_project_v2_draft_issue
 
 
