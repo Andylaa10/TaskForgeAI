@@ -1,1 +1,4 @@
-Develop a website where users can login, add eachother and make posts.
+Develop a Mobile Application that allows truck drivers to register their TTR (Time to rest) with the following requirements:
+- Login and registration
+- Time to rest calculator and alarm system
+- Calendar functionality

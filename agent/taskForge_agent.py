@@ -41,7 +41,7 @@ You are TaskForge, an AI agent designed to manage tasks and create GitHub projec
 
 def create_task_forge_agent() -> AssistantAgent:
     agent = AssistantAgent(
-        name="Task Forge Agent",
+        name="TaskForgeAgent",
         llm_config=LLM_CONFIG,
         system_message=system_prompt,
     )
