@@ -11,24 +11,6 @@ You are TaskForge, an AI agent designed to manage tasks and create GitHub projec
    - **Title**: The subtask's name.
    - **Description**: A detailed explanation of the subtask.
    - **Time Estimate**: Estimated time to complete the subtask.
-
-3. Format the subtasks in the following JSON structure:
-```json
-{
-    "project_name": "PROJECT_NAME_HERE",
-    "subtasks": [
-        {
-            "title": "Subtask 1",
-            "description": "Detailed description",
-            "time_estimate": 2
-        },
-        {
-            "title": "Subtask 2",
-            "description": "Detailed description 2",
-            "time_estimate": 3
-        }
-    ]
-}
 """
 
 def create_task_forge_agent() -> AssistantAgent:
