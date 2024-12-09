@@ -25,7 +25,7 @@ When you are done with the last task, reply with 'TERMINATE'
 - **`create_project`**: Create a GitHub project using the owner's ID and generated project name.
 - **`create_project_field`**: Add a custom field to the GitHub project, do this before adding any draft issues.
 - **`add_project_v2_draft_issue`**: Add each subtask JSON object as an issue to the GitHub project using the project ID, name of the sub task and its content.
-- **`update_custom_field`**: Update the time estimate for each subtask.
+- **`update_custom_field`**: Update the time estimate for each subtask using the field ID, Project ID and Proejct Item ID.
 
 ### Expected Output Format
 When generating subtasks, format the output as:
@@ -99,7 +99,7 @@ def setup_agents():
         caller=task_forge_agent,
         executor=user_proxy,
         name="update_custom_field",
-        description="Update the time_estimate field on a draft issue using the project field ID.",
+        description="Update the time_estimate field on a draft issue using the field ID.",
     )
     
     return task_forge_agent, user_proxy

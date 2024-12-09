@@ -1,4 +1,1 @@
-Develop a mobile application with the following features:
-- User registration and authentication
-- Calculator functionality
-- Log in and log out capabilities
+Develop a website where users can login, add eachother and make posts.
