@@ -1,19 +1,4 @@
-﻿# LLM_CONFIG = {
-#     "config_list": [
-#         {
-#             "model": "mistral:latest",
-#             "client_host": "127.0.0.1:11434",
-#             "api_type": "ollama",
-#             "repeat_penalty": 1.1,
-#             "seed": 42,
-#             "stream": False,
-#             "native_tool_calls": False,
-#             "cache_seed": None,
-#         }
-#     ],
-# }
-
-import os
+﻿import os
 from dotenv import load_dotenv
 
 load_dotenv(dotenv_path=".env")
