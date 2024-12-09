@@ -1,4 +1,1 @@
-Develop a Mobile Application that allows truck drivers to register their TTR (Time to rest) with the following requirements:
-- Login and registration
-- Time to rest calculator and alarm system
-- Calendar functionality
+Develop a thorough calculator functionality in an already existing React Native "Multi Tool" App.
