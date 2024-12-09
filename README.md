@@ -51,3 +51,6 @@ python .\main.py
 
 
 ## Output
+
+## Example
+<img src="./assets//run_example_TaskForgeAI.gif"/>
